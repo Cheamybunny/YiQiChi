@@ -1,36 +1,31 @@
 import { KeyboardAvoidingView, StyleSheet, Text, View, TouchableOpacity, TextInput} from 'react-native'
 import React, { useState , useEffect }from 'react'
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../Firebase';
+import { auth, firebaseConfig, app } from '../Firebase';
 import { useNavigation } from '@react-navigation/core'
-import { FirebaseError } from 'firebase/app';
-import firebase from 'firebase/app';
+import { FirebaseError, initializeApp } from 'firebase/app';
+import {doc, getFirestore, setDoc} from 'firebase/firestore';
 
-
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
 
   const navigation = useNavigation()
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        navigation.replace("Home")
-      }
-    })
-    return unsubscribe
-  }, [])
-
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
+  const db = getFirestore(app)
+  
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth, email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        console.log('Logged in with:', user.email);
+        setDoc(doc(db, "users", user.uid), {
+            username,
+            email
+        })
+        console.log('Registered with:',user.email);
       })
       .catch(error => alert(error.message))
   }
-
 
   return (
     <KeyboardAvoidingView
@@ -52,19 +47,18 @@ const LoginScreen = () => {
           secureTextEntry
           autoCapitalize="none"
         />
+        <TextInput
+          placeholder='Username'
+          value={username}
+          onChangeText={text => setUsername(text)}
+          style={styles.input}
+          autoCapitalize="none"
+        />
       </View>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={handleLogin}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => 
-            navigation.navigate("Register")
-          }
+          onPress={handleSignUp}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Register</Text>
@@ -74,7 +68,7 @@ const LoginScreen = () => {
   )
 }
 
-export default LoginScreen
+export default RegisterScreen
 
 const styles = StyleSheet.create({
   container: {
