@@ -3,8 +3,10 @@ import React from 'react'
 
 const ProfileScreen = () => {
   return (
-    <View>
-      <Text>ProfileScreen</Text>
+    <View style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
+      <View style={{width: '100%', padding: 10}}>
+        <Text>ProfileScreen</Text>
+      </View>
     </View>
   )
 }
