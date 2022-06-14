@@ -6,7 +6,7 @@ import ProfileScreen from './ProfileScreen'
 import SearchScreen from './SearchScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const homeName = 'Homes';
+const homeName = 'Home';
 const profileName = 'Profile';
 const searchName = 'Search';
 
@@ -49,9 +49,9 @@ function BottomContainer() {
         })}
     >
 
-        <Tab.Screen name={homeName} component={HomeScreen}/>
-        <Tab.Screen name={searchName} component={SearchScreen}/>
-        <Tab.Screen name={profileName} component={ProfileScreen}/>
+        <Tab.Screen name={homeName} component={HomeScreen} options={{headerShown: false}}/>
+        <Tab.Screen name={searchName} component={SearchScreen} options={{headerShown: false}}/>
+        <Tab.Screen name={profileName} component={ProfileScreen} options={{headerShown: false}}/>
 
     </Tab.Navigator>
   );
