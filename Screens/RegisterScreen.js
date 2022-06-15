@@ -1,9 +1,8 @@
 import { KeyboardAvoidingView, StyleSheet, Text, View, TouchableOpacity, TextInput} from 'react-native';
-import React, { useState , useEffect }from 'react'
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, firebaseConfig, app } from '../Firebase';
+import React, { useState }from 'react'
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, app } from '../Firebase';
 import { useNavigation } from '@react-navigation/core'
-import { FirebaseError, initializeApp } from 'firebase/app';
 import {doc, getFirestore, setDoc} from 'firebase/firestore';
 
 const RegisterScreen = () => {

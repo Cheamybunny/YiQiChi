@@ -8,9 +8,10 @@ import Post from '../ScreenComp/Home/Post'
 import { ScrollView } from 'react-native-gesture-handler';
 import { doc, collectionGroup, onSnapshot, query } from 'firebase/firestore'
 import { POSTS } from '../dummyData/posts';
+import BottomContainer from './BottomContainer';
 const HomeScreen = () => {
 
-  // const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([])
   // const navigation = useNavigation()
 
   // const handleSignOut = () => {
@@ -21,28 +22,25 @@ const HomeScreen = () => {
   //     .catch(error => alert(error.message))
   // }
   
-  // const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
-  //   setPosts(snapshot.docs.map(doc => doc.data()))
-  // })
+  const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
+    setPosts(snapshot.docs.map(doc => doc.data()))
+  })
 
-  // useEffect(() => { 
-  //   loadPosts
-  // })
+  useEffect(() => { 
+    loadPosts
+  })
 
-  const test = console.log(POSTS)
-  test;
 
   return (
     <SafeAreaView>
         <Header/>
         <ScrollView>
           { 
-            POSTS.map((post, index) =>(
+            posts.map((post, index) =>(
             <Post post={post} key={index} />
             ))
           }
         </ScrollView>
-      
     </SafeAreaView>
   )
 }

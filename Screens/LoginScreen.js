@@ -1,10 +1,8 @@
 import { KeyboardAvoidingView, StyleSheet, Text, View, TouchableOpacity, TextInput} from 'react-native';
 import React, { useState , useEffect }from 'react'
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../Firebase';
 import { useNavigation } from '@react-navigation/core'
-import { FirebaseError } from 'firebase/app';
-import firebase from 'firebase/app';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
