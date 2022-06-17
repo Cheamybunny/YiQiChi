@@ -1,62 +1,87 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react'
+import { StyleSheet, Text, View, Image } from 'react-native';
+import React, { useEffect, useState } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeScreen from './HomeScreen'
 import ProfileScreen from './ProfileScreen'
 import SearchScreen from './SearchScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import {auth, db} from '../Firebase'
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useScrollToTop } from '@react-navigation/native';
 
-const homeName = 'Homes';
+const homeName = 'Home';
 const profileName = 'Profile';
 const searchName = 'Search';
 
-const Tab = createBottomTabNavigator();
 
 function BottomContainer() {
+    const [user, setUser] = useState([])
+    useEffect(() => {
+        const cuser = auth.currentUser?.uid
+        const docRef = doc(db, 'users', cuser)
+        onSnapshot(docRef, (docs) => {
+            setUser(docs.data())
+        })
+    }, [])
+    console.log(user)
+    const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator
-        initialRouteName={homeName}
-        screenOptions={({ route }) => ({
-            tabBarIcon: ({focused, color, size}) => {
-                let iconName;
-                let rn = route.name;
 
-                if (rn === homeName) {
-                    iconName = focused ? 'home' : 'home-outline'
-                } else if (rn === searchName) {
-                    iconName = focused ? 'search' : 'search-outline'
-                } else if (rn === profileName) {
-                    iconName = focused ? 'person' : 'person-outline'
-                }
+        <Tab.Navigator
+            initialRouteName={homeName}
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({focused, color, size}) => {
+                    let iconName;
+                    let rn = route.name;
 
-                return <Ionicons name={iconName} size={size} color={color}/>
+                    if (rn === homeName) {
+                        iconName = focused ? 'home' : 'home-outline'
+                    } else if (rn === searchName) {
+                        iconName = focused ? 'search' : 'search-outline'
+                    } else if (rn === profileName) {
+                        // iconName = focused ? 'person' : 'person-outline'
+                        return <Image source={{uri: user == null ? 'https://usuploads.s3.amazonaws.com/itlearn360/uploads/2018/12/dummy-profile-pic-300x300.jpg' : user.profilePic}} 
+                        style={styles.profilePic(focused)}/> 
+                    }
 
-            },
+                    return <Ionicons name={iconName} size={size} color={color}/>
 
-            "tabBarActiveTintColor": "#0782F9",
-            "tabBarInactiveTintColor": "grey",
-            "tabBarLabelStyle": {
-                "paddingBottom": 10,
-                "fontSize": 10
-            },
-            "tabBarStyle": [
-                {
-                 "display": "flex"
                 },
-                null
-            ]
-              
-        })}
-    >
 
-        <Tab.Screen name={homeName} component={HomeScreen}/>
-        <Tab.Screen name={searchName} component={SearchScreen}/>
-        <Tab.Screen name={profileName} component={ProfileScreen}/>
+                "tabBarActiveTintColor": "black",
+                "tabBarInactiveTintColor": "grey",
+                "tabBarShowLabel": false,
+                "tabBarLabelStyle": {
+                    "paddingTop": 10,
+                    "fontSize": 10
+                },
+                "tabBarStyle": [
+                    {
+                    "display": "flex"
+                    },
+                    null
+                ]
+                
+            })}
+        >
+            
+            <Tab.Screen name={homeName} component={HomeScreen} options={{headerShown: false}}/>
+            <Tab.Screen name={searchName} component={SearchScreen} options={{headerShown: false}}/>
+            <Tab.Screen name={profileName} component={ProfileScreen} options={{headerShown: false}}/>
 
-    </Tab.Navigator>
+        </Tab.Navigator>
   );
 }
 
 export default BottomContainer
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    profilePic: (focused) => ({
+        width: 30,
+        height: 30,
+        borderRadius: 50,
+        borderWidth: focused ? 2 : 0,
+        borderColor: 'black'
+    }) 
+})
