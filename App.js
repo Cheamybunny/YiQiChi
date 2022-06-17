@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './Screens/LoginScreen';
 import RegisterScreen from './Screens/RegisterScreen';
 import BottomContainer from './Screens/BottomContainer';
+import EditProfile from './ScreenComp/EditProfile';
 import HomeScreen from './Screens/HomeScreen';
 
 const Stack = createNativeStackNavigator();
@@ -16,6 +17,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="YiQiChi Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="Main" component={BottomContainer} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>

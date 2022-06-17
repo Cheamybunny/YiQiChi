@@ -1,5 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
+import Feather from 'react-native-vector-icons/Feather'
+import { useNavigation } from "@react-navigation/native"
 
 export const ProfileBody = ({
     name, 
@@ -11,7 +13,46 @@ export const ProfileBody = ({
 }) => {
   return (
     <View>
-      {accountName ? null : (
+      {accountName ? (
+      <View style={{
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between',
+      }}>
+        <View style={{
+          flexDirection:'row',
+          alignItems:'center',
+        }}>
+          <Text style={{
+            fontSize: 18,
+            fontWeight:'bold',
+          }}>
+            {accountName}
+          </Text>
+          <Feather name="chevron-down" style={{
+            fontSize: 20,
+            color: 'black',
+            paddingHorizontal: 5,
+            opacity: 0.5,
+          }}/>
+        </View>
+        <View style={{flexDirection: 'row', alignItems:'center'}}>
+          <Feather 
+            name="plus-square" 
+            style={{
+              fontSize: 25,
+              color:'black',
+              paddingHorizontal: 15,
+          }}/>
+          <Feather
+           name="menu"
+           style={{
+            fontSize: 25,
+           }}
+          />
+        </View>
+      </View> 
+      ) : null}
         <View style ={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -39,28 +80,66 @@ export const ProfileBody = ({
             </Text>
           </View>
           <View style={{alignItems: 'center'}}>
-              <Text style={{fontweight:'bold', fontSize:18}}>{post}</Text>
+              <Text style={{fontWeight:'bold', fontSize:18}}>{post}</Text>
               <Text>Posts</Text>
           </View>
           <View style={{alignItems: 'center'}}>
-              <Text style={{fontweight:'bold', fontSize:18}}>{followers}</Text>
+              <Text style={{fontWeight:'bold', fontSize:18}}>{followers}</Text>
               <Text>Followers</Text>
           </View>
           <View style={{alignItems: 'center'}}>
-              <Text style={{fontweight:'bold', fontSize:18}}>{following}</Text>
+              <Text style={{fontWeight:'bold', fontSize:18}}>{following}</Text>
               <Text>Following</Text>
           </View>
         </View>
-        )}
     </View>
   )
 }
 
-export const ProfileButtons = ({id}) => {
+export const ProfileButtons = ({id,name,accountName,profileImage}) => {
+    const navigation = useNavigation()
     const [follow, setFollow] = useState(follow)
   return (
       <View>
-      {id === 0 ? null : (
+      {id === 0 ? (
+        <View style={{
+          width:'100%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-evenly',
+          paddingVertical:5
+        }}>
+        <TouchableOpacity 
+        onPress={()=> 
+          navigation.push('EditProfile',{
+            name: name, 
+            accountName: accountName,
+            profileImage: profileImage,
+          })
+        }
+        style={{
+          width: '100%',
+        }}>
+          <View style={{
+            width:'100%',
+            height: 35,
+            borderRadius:5,
+            borderColor:"DEDEDE",
+            borderWidth: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <Text style={{
+              fontWight: 'bold',
+              fontSize: 14,
+              letterSpacing: 1,
+              opacity:0.8,
+            }}>Edit Profile</Text>
+          </View>
+        </TouchableOpacity>
+
+        </View>
+      ) : (
             <View 
               style={{
                 width:'100%',
