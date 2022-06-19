@@ -12,18 +12,18 @@ const homeName = 'Home';
 const profileName = 'Profile';
 const searchName = 'Search';
 
+const Tab = createBottomTabNavigator();
 
 function BottomContainer() {
-    const [user, setUser] = useState([])
-    useEffect(() => {
-        const cuser = auth.currentUser?.uid
-        const docRef = doc(db, 'users', cuser)
-        onSnapshot(docRef, (docs) => {
-            setUser(docs.data())
-        })
-    }, [])
+    //const [user, setUser] = useState([])
+    //useEffect(() => {
+      //  const cuser = auth.currentUser?.uid
+      //  const docRef = doc(db, 'users', cuser)
+       // onSnapshot(docRef, (docs) => {
+        //    setUser(docs.data())
+      //  })
+   // }, [])
 
-    const Tab = createBottomTabNavigator();
   return (
 
         <Tab.Navigator
@@ -38,9 +38,9 @@ function BottomContainer() {
                     } else if (rn === searchName) {
                         iconName = focused ? 'search' : 'search-outline'
                     } else if (rn === profileName) {
-                        // iconName = focused ? 'person' : 'person-outline'
-                        return <Image source={{uri: user == null ? 'https://usuploads.s3.amazonaws.com/itlearn360/uploads/2018/12/dummy-profile-pic-300x300.jpg' : user.profilePic}} 
-                        style={styles.profilePic(focused)}/> 
+                        iconName = focused ? 'person' : 'person-outline'
+                        //return <Image source={{uri: user == null ? 'https://usuploads.s3.amazonaws.com/itlearn360/uploads/2018/12/dummy-profile-pic-300x300.jpg' : user.profilePic}} 
+                        //style={styles.profilePic(focused)}/> 
                     }
 
                     return <Ionicons name={iconName} size={size} color={color}/>
@@ -49,7 +49,7 @@ function BottomContainer() {
 
                 "tabBarActiveTintColor": "black",
                 "tabBarInactiveTintColor": "grey",
-                "tabBarShowLabel": false,
+                //"tabBarShowLabel": false,
                 "tabBarLabelStyle": {
                     "paddingTop": 10,
                     "fontSize": 10
@@ -74,12 +74,4 @@ function BottomContainer() {
 
 export default BottomContainer
 
-const styles = StyleSheet.create({
-    profilePic: (focused) => ({
-        width: 30,
-        height: 30,
-        borderRadius: 50,
-        borderWidth: focused ? 2 : 0,
-        borderColor: 'black'
-    }) 
-})
+const styles = StyleSheet.create({})
