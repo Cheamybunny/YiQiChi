@@ -8,7 +8,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import {auth, db} from '../Firebase'
 import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useScrollToTop } from '@react-navigation/native';
 
 const homeName = 'Home';
 const profileName = 'Profile';
