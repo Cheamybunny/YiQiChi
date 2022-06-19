@@ -1,14 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import React, { useState, useEffect } from 'react'
-import { signOut } from 'firebase/auth'
-import { auth, db } from '../Firebase'
-import { useNavigation } from '@react-navigation/native'
+import { db } from '../Firebase'
 import Header from '../ScreenComp/Home/Header';
 import Post from '../ScreenComp/Home/Post'
 import { ScrollView } from 'react-native-gesture-handler';
-import { doc, collectionGroup, onSnapshot, query } from 'firebase/firestore'
-import { POSTS } from '../dummyData/posts';
-import BottomContainer from './BottomContainer';
+import { collectionGroup, onSnapshot } from 'firebase/firestore'
 const HomeScreen = () => {
 
   const [posts, setPosts] = useState([])

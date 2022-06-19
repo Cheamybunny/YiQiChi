@@ -63,7 +63,7 @@ export const ProfileBody = ({
               alignItems: 'center',
           }}>
             <Image 
-              source={profileImage} 
+              source={{uri: profileImage == null ? 'https://usuploads.s3.amazonaws.com/itlearn360/uploads/2018/12/dummy-profile-pic-300x300.jpg' : profileImage}} 
               style={{
                 resizeMode: 'cover',
                 width: 80,
@@ -130,7 +130,7 @@ export const ProfileButtons = ({id,name,accountName,profileImage}) => {
             alignItems: 'center'
           }}>
             <Text style={{
-              fontWight: 'bold',
+              fontWeight: 'bold',
               fontSize: 14,
               letterSpacing: 1,
               opacity:0.8,
