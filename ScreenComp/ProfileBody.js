@@ -18,14 +18,16 @@ export const ProfileBody = ({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between',
+        paddingHorizontal: 10
       }}>
         <View style={{
           flexDirection:'row',
           alignItems:'center',
+          paddingHorizontal: 20
         }}>
           <Text style={{
-            fontSize: 18,
-            fontWeight:'bold',
+            fontSize: 30,
+            fontWeight:'600', 
           }}>
             {accountName}
           </Text>
@@ -40,14 +42,14 @@ export const ProfileBody = ({
           <Feather 
             name="plus-square" 
             style={{
-              fontSize: 25,
+              fontSize: 30,
               color:'black',
               paddingHorizontal: 15,
           }}/>
           <Feather
            name="menu"
            style={{
-            fontSize: 25,
+            fontSize: 30,
            }}
           />
         </View>

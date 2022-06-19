@@ -19,25 +19,25 @@ const ProfileScreen = () => {
     
   // console.log(user)
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{color: 'white'}}>
       <View style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
-        <View style={{width: '100%', padding: 10}}>
-          <ProfileBody
-          name={user.username}
-          accountName="aespa_winter"
-          profileImage={user == null ? null: user.profilePic}
-          followers="35"
-          following="36"
-          post="42"
-        />
-        <ProfileButtons 
-        id={0} 
-        name="Kim Min Jeong" 
-        accountName="aespa_winter"
-        profileImage={user == null ? null : user.profilePic}
-        />
-        </View>
-        <BottomTabView/>
+      
+        <ProfileBody
+        name={user.name}
+        accountName={user.username}
+        profileImage={user == null ? null: user.profilePic}
+        followers="35"
+        following="36"
+        post="42"
+      />
+      <ProfileButtons 
+      id={0} 
+      name={user.name} 
+      accountName={user.username}
+      profileImage={user == null ? null : user.profilePic}
+      />
+
+      <BottomTabView/>
       </View>
     </SafeAreaView>
   )
