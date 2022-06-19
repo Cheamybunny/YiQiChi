@@ -6,7 +6,7 @@ import ProfileScreen from './ProfileScreen'
 import SearchScreen from './SearchScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {auth, db} from '../Firebase'
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 
 const homeName = 'Home';
 const profileName = 'Profile';
@@ -15,15 +15,21 @@ const searchName = 'Search';
 const Tab = createBottomTabNavigator();
 
 function BottomContainer() {
-    //const [user, setUser] = useState([])
-    //useEffect(() => {
-      //  const cuser = auth.currentUser?.uid
-      //  const docRef = doc(db, 'users', cuser)
-       // onSnapshot(docRef, (docs) => {
-        //    setUser(docs.data())
-      //  })
-   // }, [])
-
+    // const [user, setUser] = useState([])
+    // useEffect(() => {
+    //     const cuser = auth.currentUser?.uid
+    //     const docRef = doc(db, 'users', cuser)
+    //     const setCuser = async () => {
+    //         const docSnap = await getDoc(docRef)
+    //         if(docSnap.exists()) {
+    //             console.log(docSnap)
+    //         }
+    //     }
+    //     setCuser
+    //     // onSnapshot(docRef, (docs) => {
+    //     //     setUser(docs.data())
+    //     // })
+    // }, [])
   return (
 
         <Tab.Navigator
@@ -40,7 +46,7 @@ function BottomContainer() {
                     } else if (rn === profileName) {
                         iconName = focused ? 'person' : 'person-outline'
                         //return <Image source={{uri: user == null ? 'https://usuploads.s3.amazonaws.com/itlearn360/uploads/2018/12/dummy-profile-pic-300x300.jpg' : user.profilePic}} 
-                        //style={styles.profilePic(focused)}/> 
+                        //style={styles.profilePic(focused)}/>                    
                     }
 
                     return <Ionicons name={iconName} size={size} color={color}/>

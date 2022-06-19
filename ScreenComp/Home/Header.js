@@ -2,12 +2,23 @@ import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { color } from 'react-native-elements/dist/helpers'
 import images from '../../images'
-
+import { auth } from '../../Firebase'
+import { useNavigation } from '@react-navigation/native'
+import { signOut } from 'firebase/auth'
 const Header = () => {
+    const navigation = useNavigation()
+
+    const handleSignOut = () => {
+      signOut(auth)
+        .then(() => {
+          navigation.replace("YiQiChi Login")
+        })
+        .catch(error => alert(error.message))
+    }
     return (
    
         <View style={styles.container}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleSignOut}>
                 <Image 
                     style={styles.logo} 
                     source={images.headerLogo}
