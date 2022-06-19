@@ -5,10 +5,11 @@ import Header from '../ScreenComp/Home/Header';
 import Post from '../ScreenComp/Home/Post'
 import { ScrollView } from 'react-native-gesture-handler';
 import { collectionGroup, onSnapshot } from 'firebase/firestore'
+import { POSTS } from '../dummyData/posts';
 const HomeScreen = () => {
 
-  const [posts, setPosts] = useState([])
-  // const navigation = useNavigation()
+  // const [posts, setPosts] = useState([])
+
 
   // const handleSignOut = () => {
   //   signOut(auth)
@@ -18,13 +19,13 @@ const HomeScreen = () => {
   //     .catch(error => alert(error.message))
   // }
   
-  const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
-    setPosts(snapshot.docs.map(doc => doc.data()))
-  })
+  // const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
+  //   setPosts(snapshot.docs.map(doc => doc.data()))
+  // })
 
-  useEffect(() => { 
-    loadPosts
-  })
+  // useEffect(() => { 
+  //   loadPosts
+  // })
 
 
   return (
@@ -32,7 +33,7 @@ const HomeScreen = () => {
         <Header/>
         <ScrollView>
           { 
-            posts.map((post, index) =>(
+            POSTS.map((post, index) =>(
             <Post post={post} key={index} />
             ))
           }
