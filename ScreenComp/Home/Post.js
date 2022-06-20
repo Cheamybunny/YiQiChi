@@ -1,5 +1,9 @@
 import React from "react";
+<<<<<<< HEAD
 import { View, Text, ScollView, Image, StyleSheet, TouchableOpacity } from "react-native";
+=======
+import { View, Text, ScollView, Image, StyleSheet, TouchableOpacity} from "react-native";
+>>>>>>> 035195d879b278caf347a0b24208a40b59027e82
 import { Divider } from  'react-native-elements'
 import images from "../../images";
 const Post = ({ post }) => {

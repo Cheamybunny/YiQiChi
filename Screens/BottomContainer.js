@@ -15,6 +15,7 @@ const searchName = 'Search';
 const Tab = createBottomTabNavigator();
 
 function BottomContainer() {
+<<<<<<< HEAD
     // const [user, setUser] = useState([])
     // useEffect(() => {
     //     const cuser = auth.currentUser?.uid
@@ -30,6 +31,21 @@ function BottomContainer() {
     //     //     setUser(docs.data())
     //     // })
     // }, [])
+=======
+    const [user, setUser] = useState([])
+    useEffect(() => {
+        const cuser = auth.currentUser?.uid
+        const docRef = doc(db, 'users', cuser)
+        console.log(cuser)
+        if (auth.currentUser != null ) {
+            const getPic = onSnapshot(docRef, (docs) => {
+            setUser(docs.data())}, (error) => {
+                console.log("User is signed out")
+            })
+        } 
+    }, [])
+    const Tab = createBottomTabNavigator();
+>>>>>>> 035195d879b278caf347a0b24208a40b59027e82
   return (
 
         <Tab.Navigator
@@ -44,9 +60,15 @@ function BottomContainer() {
                     } else if (rn === searchName) {
                         iconName = focused ? 'search' : 'search-outline'
                     } else if (rn === profileName) {
+<<<<<<< HEAD
                         iconName = focused ? 'person' : 'person-outline'
                         //return <Image source={{uri: user == null ? 'https://usuploads.s3.amazonaws.com/itlearn360/uploads/2018/12/dummy-profile-pic-300x300.jpg' : user.profilePic}} 
                         //style={styles.profilePic(focused)}/>                    
+=======
+                        // iconName = focused ? 'person' : 'person-outline'
+                        return <Image source={{uri: user == null ? 'https://usuploads.s3.amazonaws.com/itlearn360/uploads/2018/12/dummy-profile-pic-300x300.jpg' : user.profilePic}} 
+                        style={styles.profilePic(focused)}/> 
+>>>>>>> 035195d879b278caf347a0b24208a40b59027e82
                     }
 
                     return <Ionicons name={iconName} size={size} color={color}/>
