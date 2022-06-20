@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react'
 import { db } from '../Firebase'
 import Header from '../ScreenComp/Home/Header';
@@ -6,9 +6,10 @@ import Post from '../ScreenComp/Home/Post'
 import { ScrollView } from 'react-native-gesture-handler';
 import { collectionGroup, onSnapshot } from 'firebase/firestore'
 import { POSTS } from '../dummyData/posts';
+import { View } from 'react-native-web';
 const HomeScreen = () => {
 
-  // const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([])
 
 
   // const handleSignOut = () => {
@@ -19,25 +20,24 @@ const HomeScreen = () => {
   //     .catch(error => alert(error.message))
   // }
   
-  // const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
-  //   setPosts(snapshot.docs.map(doc => doc.data()))
-  // })
+  const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
+    setPosts(snapshot.docs.map(doc => doc.data()))},
+    (error) => {}
+    )
 
-  // useEffect(() => { 
-  //   loadPosts
-  // })
+  useEffect(() => { 
+    loadPosts
+  })
+
 
 
   return (
     <SafeAreaView>
         <Header/>
-        <ScrollView>
-          { 
-            POSTS.map((post, index) =>(
-            <Post post={post} key={index} />
-            ))
-          }
-        </ScrollView>
+        <FlatList
+          data={posts}
+          renderItem={({item :post})=> <Post post = {post}/>}
+          />
     </SafeAreaView>
   )
 }

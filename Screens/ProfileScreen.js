@@ -13,8 +13,7 @@ const ProfileScreen = () => {
       const cuser = auth.currentUser?.uid
       const docRef = doc(db, 'users', cuser)
       onSnapshot(docRef, (docs) => {
-          setUser(docs.data())
-      })
+          setUser(docs.data())}, (error) => {})
   }, [])
     
   // console.log(user)
@@ -25,7 +24,7 @@ const ProfileScreen = () => {
         <ProfileBody
         name={user.name}
         accountName={user.username}
-        profileImage={user == null ? null: user.profilePic}
+        profileImage={ user == null ? null : user.profilePic}
         followers="35"
         following="36"
         post="42"
@@ -34,7 +33,7 @@ const ProfileScreen = () => {
       id={0} 
       name={user.name} 
       accountName={user.username}
-      profileImage={user == null ? null : user.profilePic}
+      profileImage={ user == null ? null : user.profilePic }
       />
 
       <BottomTabView/>

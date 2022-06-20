@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Text, ScollView, Image, StyleSheet, } from "react-native";
+import { View, Text, ScollView, Image, StyleSheet, TouchableOpacity} from "react-native";
 import { Divider } from  'react-native-elements'
-import { TouchableOpacity } from "react-native-gesture-handler";
 import images from "../../images";
 const Post = ({ post }) => {
     return (
