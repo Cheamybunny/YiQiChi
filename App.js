@@ -7,6 +7,8 @@ import LoginScreen from './Screens/LoginScreen';
 import RegisterScreen from './Screens/RegisterScreen';
 import BottomContainer from './Screens/BottomContainer';
 import EditProfile from './ScreenComp/EditProfile';
+import HomeScreen from './Screens/HomeScreen';
+
 
 
 const Stack = createNativeStackNavigator();

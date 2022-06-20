@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, View, FlatList, Image} from 'react-native';
 import React, { useState, useEffect } from 'react'
 import { db } from '../Firebase'
 import Header from '../ScreenComp/Home/Header';
@@ -31,13 +31,11 @@ const HomeScreen = () => {
   return (
     <SafeAreaView>
         <Header/>
-        <ScrollView>
-          { 
-            POSTS.map((post, index) =>(
-            <Post post={post} key={index} />
-            ))
-          }
-        </ScrollView>
+        <FlatList
+          data={POSTS}
+          renderItem={({item :post})=> 
+          <Post post = {post}/>}
+          />
     </SafeAreaView>
   )
 }

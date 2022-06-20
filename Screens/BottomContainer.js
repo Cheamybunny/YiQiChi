@@ -33,7 +33,7 @@ function BottomContainer() {
   return (
 
         <Tab.Navigator
-            initialRouteName={homeName}
+            initialRouteName={profileName}
             screenOptions={({ route }) => ({
                 tabBarIcon: ({focused, color, size}) => {
                     let iconName;
@@ -55,7 +55,7 @@ function BottomContainer() {
 
                 "tabBarActiveTintColor": "black",
                 "tabBarInactiveTintColor": "grey",
-                //"tabBarShowLabel": false,
+                "tabBarShowLabel": false,
                 "tabBarLabelStyle": {
                     "paddingTop": 10,
                     "fontSize": 10

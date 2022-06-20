@@ -8,14 +8,14 @@ import { doc, onSnapshot } from 'firebase/firestore';
 
 
 const ProfileScreen = () => {
-  const [user, setUser] = useState([])
-  useEffect(() => {
-      const cuser = auth.currentUser?.uid
-      const docRef = doc(db, 'users', cuser)
-      onSnapshot(docRef, (docs) => {
-          setUser(docs.data())
-      })
-  }, [])
+  // const [user, setUser] = useState([])
+  // useEffect(() => {
+  //     const cuser = auth.currentUser?.uid
+  //     const docRef = doc(db, 'users', cuser)
+  //     onSnapshot(docRef, (docs) => {
+  //         setUser(docs.data())
+  //     })
+  // }, [])
     
   // console.log(user)
   return (
@@ -23,18 +23,18 @@ const ProfileScreen = () => {
       <View style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
       
         <ProfileBody
-        name={user.name}
-        accountName={user.username}
-        profileImage={user == null ? null: user.profilePic}
+        name={'dummy'}
+        accountName={'dummy'}
+        profileImage={'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'}
         followers="35"
         following="36"
         post="42"
       />
       <ProfileButtons 
       id={0} 
-      name={user.name} 
-      accountName={user.username}
-      profileImage={user == null ? null : user.profilePic}
+      name={'dummy'} 
+      accountName={'dummy'}
+      profileImage={'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg' }
       />
 
       <BottomTabView/>
