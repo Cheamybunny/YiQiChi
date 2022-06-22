@@ -26,7 +26,7 @@ const Header = () => {
             </TouchableOpacity>
         
             <View style={styles.iconsContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("NewPost")}>
                     <Image
                         style={styles.icon}
                         source={images.newPost}

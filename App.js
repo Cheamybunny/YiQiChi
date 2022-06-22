@@ -7,7 +7,9 @@ import LoginScreen from './Screens/LoginScreen';
 import RegisterScreen from './Screens/RegisterScreen';
 import BottomContainer from './Screens/BottomContainer';
 import EditProfile from './ScreenComp/EditProfile';
-import HomeScreen from './Screens/HomeScreen';
+import NewPost from './ScreenComp/Home/NewPost';
+import Save from './ScreenComp/Home/Save';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +20,12 @@ export default function App() {
         <Stack.Screen name="YiQiChi Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="NewPost" component={NewPost} options={{
+          headerBackTitleVisible: false, headerTitle: "New Post"
+        }}/>
+        <Stack.Screen name = "Save" component={Save}/>
         <Stack.Screen name="Main" component={BottomContainer} options={{headerShown: false}}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
