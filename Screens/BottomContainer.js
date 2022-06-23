@@ -16,15 +16,22 @@ const searchName = 'Search';
 function BottomContainer() {
     const [user, setUser] = useState([])
     useEffect(() => {
-        const cuser = auth.currentUser?.uid
-        const docRef = doc(db, 'users', cuser)
-        console.log(cuser)
-        if (auth.currentUser != null ) {
-            const getPic = onSnapshot(docRef, (docs) => {
-            setUser(docs.data())}, (error) => {
-                console.log("User is signed out")
-            })
-        } 
+        const getUser = async() => {
+            if (auth.currentUser != null ) {
+                
+                const cuser = auth.currentUser?.uid
+                const docRef = doc(db, 'users', cuser)
+                const docSnap = await getDoc(docRef)
+                if (docSnap.exists()) {
+                    setUser(docSnap.data());
+                    } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                    }
+            }
+        }
+        getUser()
+        
     }, [])
     const Tab = createBottomTabNavigator();
   return (
