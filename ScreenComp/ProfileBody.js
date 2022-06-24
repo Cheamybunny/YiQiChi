@@ -1,7 +1,10 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React, {useState} from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation } from "@react-navigation/native"
+import images from '../images'
+import NewPost from './Home/NewPost'
+
 
 export const ProfileBody = ({
     name, 
@@ -12,6 +15,7 @@ export const ProfileBody = ({
     following,
     bio,
 }) => {
+  const navigation = useNavigation()
   return (
     <View>
       {accountName ? (
@@ -32,14 +36,16 @@ export const ProfileBody = ({
             {accountName}
           </Text>
         </View>
-        <View style={{flexDirection: 'row', alignItems:'center'}}>
-          <Feather 
+        <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 30}}>
+          <TouchableOpacity onPress={() => navigation.navigate(NewPost)}>
+            <Feather 
             name="plus-square" 
             style={{
               fontSize: 30,
               color:'black',
               paddingHorizontal: 5,
-          }}/>
+            }}/>
+          </TouchableOpacity>
           <Feather
            name="menu"
            style={{
@@ -185,3 +191,12 @@ export const ProfileButtons = ({id,userDetails}) => {
       </View>
   )
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 30,
+    height: 30,
+    marginHorizontal: 20,
+    resizeMode: 'contain',
+  }
+})
