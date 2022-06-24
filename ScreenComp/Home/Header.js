@@ -16,7 +16,7 @@ const Header = () => {
         .catch(error => alert(error.message))
     }
     return (
-   
+        
         <View style={styles.container}>
             <TouchableOpacity onPress={handleSignOut}>
                 <Image 

@@ -5,7 +5,8 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { auth } from "../../Firebase"
 import { getDoc, doc, setDoc, serverTimestamp } from "firebase/firestore"
 import { useNavigation } from "@react-navigation/native"
-
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/storage'
 
 
 function Save ({route}) {
@@ -48,7 +49,7 @@ function Save ({route}) {
             setData("")
             navigation.navigate("Home")
         }
-        getUser()
+        if(user == []) {getUser()}
     })
    
     
@@ -58,8 +59,7 @@ function Save ({route}) {
         const response = await fetch(image);
         const file = await response.blob();
         const uploadTask = uploadBytesResumable(storageRef, file);
-        
-
+   
         uploadTask.on('state_changed', 
         (snapshot) => {
           // Observe state change events such as progress, pause, and resume
