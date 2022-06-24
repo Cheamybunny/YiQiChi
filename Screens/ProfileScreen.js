@@ -18,7 +18,7 @@ const ProfileScreen = () => {
     
   // console.log(user)
   return (
-    <SafeAreaView style={{color: 'white'}}>
+    <SafeAreaView style={{backgroundColor: 'white'}}>
       <View style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
       
         <ProfileBody

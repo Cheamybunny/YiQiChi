@@ -27,13 +27,13 @@ const HomeScreen = () => {
 
   useEffect(() => { 
     loadPosts
-  })
+  }, [])
 
 
 
   return (
     <SafeAreaView>
-        <Header/>
+        <Header navigation/>
         <FlatList
           data={posts}
           renderItem={({item :post})=> <Post post = {post}/>}

@@ -1,7 +1,10 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React, {useState} from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation } from "@react-navigation/native"
+import images from '../images'
+import NewPost from './Home/NewPost'
+
 
 export const ProfileBody = ({
     name, 
@@ -11,6 +14,7 @@ export const ProfileBody = ({
     followers,
     following,
 }) => {
+  const navigation = useNavigation()
   return (
     <View>
       {accountName ? (
@@ -38,14 +42,17 @@ export const ProfileBody = ({
             opacity: 0.5,
           }}/>
         </View>
-        <View style={{flexDirection: 'row', alignItems:'center'}}>
-          <Feather 
+        <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 30}}>
+          <TouchableOpacity onPress={() => navigation.navigate(NewPost)}>
+            <Feather 
             name="plus-square" 
             style={{
               fontSize: 30,
               color:'black',
-              paddingHorizontal: 15,
-          }}/>
+              paddingHorizontal: 5,
+            }}/>
+
+          </TouchableOpacity>
           <Feather
            name="menu"
            style={{
@@ -113,7 +120,7 @@ export const ProfileButtons = ({id,name,accountName,profileImage}) => {
         }}>
         <TouchableOpacity 
         onPress={()=> 
-          navigation.push('EditProfile',{
+          navigation.navigate('EditProfile',{
             name: name, 
             accountName: accountName,
             profileImage: profileImage,
@@ -184,3 +191,12 @@ export const ProfileButtons = ({id,name,accountName,profileImage}) => {
       </View>
   )
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 30,
+    height: 30,
+    marginHorizontal: 20,
+    resizeMode: 'contain',
+  }
+})
