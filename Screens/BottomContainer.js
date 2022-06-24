@@ -12,6 +12,7 @@ const homeName = 'Home';
 const profileName = 'Profile';
 const searchName = 'Search';
 
+const Tab = createBottomTabNavigator();
 
 function BottomContainer() {
     const [user, setUser] = useState([])
@@ -37,7 +38,7 @@ function BottomContainer() {
   return (
 
         <Tab.Navigator
-            initialRouteName={homeName}
+            initialRouteName={profileName}
             screenOptions={({ route }) => ({
                 tabBarIcon: ({focused, color, size}) => {
                     let iconName;
@@ -48,8 +49,7 @@ function BottomContainer() {
                     } else if (rn === searchName) {
                         iconName = focused ? 'search' : 'search-outline'
                     } else if (rn === profileName) {
-                        // iconName = focused ? 'person' : 'person-outline'
-                        return <Image source={{uri: user == null ? 'https://usuploads.s3.amazonaws.com/itlearn360/uploads/2018/12/dummy-profile-pic-300x300.jpg' : user.profilePic}} 
+                        return <Image source={{uri: user.profilePic}} 
                         style={styles.profilePic(focused)}/> 
                     }
 

@@ -15,27 +15,23 @@ const ProfileScreen = () => {
       onSnapshot(docRef, (docs) => {
           setUser(docs.data())}, (error) => {})
   }, [])
-    
-  // console.log(user)
+  
   return (
     <SafeAreaView style={{backgroundColor: 'white'}}>
       <View style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
-      
-        <ProfileBody
+      <ProfileBody
         name={user.name}
         accountName={user.username}
-        profileImage={ user == null ? null : user.profilePic}
-        followers="35"
-        following="36"
-        post="42"
+        profileImage={user.profilePic}
+        followers={user.followers}
+        following={user.following}
+        post={user.post}
+        bio={user.bio}
       />
       <ProfileButtons 
       id={0} 
-      name={user.name} 
-      accountName={user.username}
-      profileImage={ user == null ? null : user.profilePic }
+      userDetails={user}
       />
-
       <BottomTabView/>
       </View>
     </SafeAreaView>

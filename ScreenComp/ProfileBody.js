@@ -13,6 +13,7 @@ export const ProfileBody = ({
     post,
     followers,
     following,
+    bio,
 }) => {
   const navigation = useNavigation()
   return (
@@ -22,25 +23,18 @@ export const ProfileBody = ({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between',
-        paddingHorizontal: 10
       }}>
         <View style={{
           flexDirection:'row',
           alignItems:'center',
-          paddingHorizontal: 20
+          paddingHorizontal: 10,
         }}>
           <Text style={{
-            fontSize: 30,
-            fontWeight:'600', 
+            fontSize: 25,
+            fontWeight:'600',
           }}>
             {accountName}
           </Text>
-          <Feather name="chevron-down" style={{
-            fontSize: 20,
-            color: 'black',
-            paddingHorizontal: 5,
-            opacity: 0.5,
-          }}/>
         </View>
         <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 30}}>
           <TouchableOpacity onPress={() => navigation.navigate(NewPost)}>
@@ -51,12 +45,12 @@ export const ProfileBody = ({
               color:'black',
               paddingHorizontal: 5,
             }}/>
-
           </TouchableOpacity>
           <Feather
            name="menu"
            style={{
             fontSize: 30,
+            paddingHorizontal: 10,
            }}
           />
         </View>
@@ -68,35 +62,42 @@ export const ProfileBody = ({
             justifyContent: 'space-around',
             paddingVertical: 20,
         }}>
-          <View style={{
-              alignItems: 'center',
-          }}>
+          <View>
             <Image 
-              source={{uri: profileImage == null ? 'https://usuploads.s3.amazonaws.com/itlearn360/uploads/2018/12/dummy-profile-pic-300x300.jpg' : profileImage}} 
+              source={{uri: profileImage}} 
               style={{
                 resizeMode: 'cover',
                 width: 80,
                 height: 80,
                 borderRadius: 100,
+                alignSelf: 'center',
                }}
             />
             <Text 
               style={{
-                paddingVertical: 5,
+                paddingTop: 7,
                 fontWeight: 'bold',
+                alignSelf: 'center',
               }}>
               {name}
             </Text>
+            <Text 
+              style={{
+                paddingVertical: 5,
+                textAlign: 'left',
+              }}>
+              {bio}
+            </Text>
           </View>
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center', paddingBottom: 40,}}>
               <Text style={{fontWeight:'bold', fontSize:18}}>{post}</Text>
               <Text>Posts</Text>
           </View>
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center', paddingBottom: 40,}}>
               <Text style={{fontWeight:'bold', fontSize:18}}>{followers}</Text>
               <Text>Followers</Text>
           </View>
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center', paddingBottom: 40, paddingRight: 5}}>
               <Text style={{fontWeight:'bold', fontSize:18}}>{following}</Text>
               <Text>Following</Text>
           </View>
@@ -105,25 +106,24 @@ export const ProfileBody = ({
   )
 }
 
-export const ProfileButtons = ({id,name,accountName,profileImage}) => {
+export const ProfileButtons = ({id,userDetails}) => {
     const navigation = useNavigation()
     const [follow, setFollow] = useState(follow)
   return (
       <View>
       {id === 0 ? (
         <View style={{
-          width:'100%',
+          width:'95%',
           flexDirection: 'row',
-          alignItems: 'center',
+          alignSelf: 'center',
           justifyContent: 'space-evenly',
-          paddingVertical:5
+          paddingHorizontal: 5,
         }}>
         <TouchableOpacity 
         onPress={()=> 
-          navigation.navigate('EditProfile',{
-            name: name, 
-            accountName: accountName,
-            profileImage: profileImage,
+          navigation.push('EditProfile',{
+            userDetails: userDetails,
+            imageSource: null
           })
         }
         style={{

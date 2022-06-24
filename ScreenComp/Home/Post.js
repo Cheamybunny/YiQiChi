@@ -8,7 +8,7 @@ const Post = ({ post }) => {
             <Divider width={1} orientation='vertical' />
             <PostHeader post={ post } />
             <PostImage post={ post } />
-            <View style={{ marginHorizontal: 15, marginTop: 10}}>
+            <View style={{ marginHorizontal: 15, marginTop: 10,}}>
                 <PostFooter/>
                 <Likes post={ post } />
                 <Caption post={ post }/>
@@ -75,10 +75,11 @@ const Caption = ({post}) => (
 )
 
 const CommentSection = ({post}) => (
-    <View style={{ marginTop: 5}}>
-        {!!post.comments.length && (       
+    <View style={{ marginTop: 5 }}>
+        {post.comments.length > 0 && (       
             <Text style={{color:'grey'}}>
-                View {post.comments.length > 1 ? 'all' : ''} {post.comments.length} {post.comments.length > 1 ? 'comments' : 'comment'}
+                View {post.comments.length > 1 ? 'all' : ''} {post.comments.length}{' '}
+                {post.comments.length > 1 ? 'comments' : 'comment'}
             </Text>
         )}
     </View> 
@@ -87,7 +88,7 @@ const CommentSection = ({post}) => (
 const Comments = ({post}) => (
     <>
         {
-            post.comments.map((comment, index) => 
+            post.comments.map((comment, index) => (
                 <View key={index} style={{flexDirection: 'row', marginTop: 5}}>
                     <Text>
                         <Text style={{fontWeight: '600', }}>{comment.user}</Text>
@@ -95,7 +96,7 @@ const Comments = ({post}) => (
                     </Text>
                 </View>
 
-            )
+            ))
         }
     </>
 )
