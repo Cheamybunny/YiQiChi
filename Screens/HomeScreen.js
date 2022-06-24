@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { StyleSheet, SafeAreaView, Text, View, FlatList, Image} from 'react-native';
-=======
 import { StyleSheet, SafeAreaView, FlatList } from 'react-native';
->>>>>>> 035195d879b278caf347a0b24208a40b59027e82
 import React, { useState, useEffect } from 'react'
 import { db } from '../Firebase'
 import Header from '../ScreenComp/Home/Header';
@@ -39,14 +35,8 @@ const HomeScreen = () => {
     <SafeAreaView>
         <Header/>
         <FlatList
-<<<<<<< HEAD
-          data={POSTS}
-          renderItem={({item :post})=> 
-          <Post post = {post}/>}
-=======
           data={posts}
           renderItem={({item :post})=> <Post post = {post}/>}
->>>>>>> 035195d879b278caf347a0b24208a40b59027e82
           />
     </SafeAreaView>
   )

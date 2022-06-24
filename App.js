@@ -7,7 +7,7 @@ import LoginScreen from './Screens/LoginScreen';
 import RegisterScreen from './Screens/RegisterScreen';
 import BottomContainer from './Screens/BottomContainer';
 import EditProfile from './ScreenComp/EditProfile';
-import HomeScreen from './Screens/HomeScreen';
+import EditProfilePic from './ScreenComp/EditProfilePic';
 
 
 
@@ -20,6 +20,7 @@ export default function App() {
         <Stack.Screen name="YiQiChi Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="EditProfilePic" component={EditProfilePic} />
         <Stack.Screen name="Main" component={BottomContainer} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>

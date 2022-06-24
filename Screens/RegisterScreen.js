@@ -3,12 +3,18 @@ import React, { useState }from 'react'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, app } from '../Firebase';
 import { useNavigation } from '@react-navigation/core'
-import {doc, getFirestore, setDoc} from 'firebase/firestore';
+import { doc, getFirestore, setDoc } from 'firebase/firestore';
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
+  const [name, setName] = useState('')
+  const post = 0;
+  const followers = 0;
+  const following = 0;
+  const bio = '';
+  const profilePic = 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
 
   const navigation = useNavigation()
   const db = getFirestore(app)
@@ -19,7 +25,13 @@ const RegisterScreen = () => {
         const user = userCredentials.user;
         setDoc(doc(db, "users", user.uid), {
             username,
-            email
+            email,
+            name,
+            post,
+            followers,
+            following,
+            bio,
+            profilePic,
         })
         console.log('Registered with:',user.email);
       })
@@ -44,6 +56,13 @@ const RegisterScreen = () => {
           onChangeText={text => setPassword(text)}
           style={styles.input}
           secureTextEntry
+          autoCapitalize="none"
+        />
+        <TextInput
+          placeholder='Name'
+          value={name}
+          onChangeText={text => setName(text)}
+          style={styles.input}
           autoCapitalize="none"
         />
         <TextInput
