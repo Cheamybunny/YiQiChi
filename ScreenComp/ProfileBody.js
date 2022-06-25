@@ -36,7 +36,7 @@ export const ProfileBody = ({
             {accountName}
           </Text>
         </View>
-        <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 30}}>
+        <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 5}}>
           <TouchableOpacity onPress={() => navigation.navigate(NewPost)}>
             <Feather 
             name="plus-square" 

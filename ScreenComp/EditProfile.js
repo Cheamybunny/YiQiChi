@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert, Image, TextInput, SafeAreaView, Dimensions} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Image, TextInput, SafeAreaView, StatusBar} from 'react-native'
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import { auth, app, db } from '../Firebase';
 import { useNavigation } from "@react-navigation/native"
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage"
 
 
 const EditProfile = ({route, navigation}) => {
@@ -40,30 +40,34 @@ const EditProfile = ({route, navigation}) => {
     const storageRef = ref(storage, `profilePic/${auth.currentUser.uid}/${Math.random().toString(36)}`)
     const response = await fetch(image);
     const file = await response.blob();
-    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadBytes(storageRef, file).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((downloadURL) => {
+                  setPic(downloadURL)}
+      )})
+    // const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on('state_changed', 
-    (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case 'paused':
-          console.log('Upload is paused');
-          break;
-        case 'running':
-          console.log('Upload is running');
-          break;
-      }
-    }, 
-    (error) => {
-      console.log(error)
-    }, 
-    () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        setPic(downloadURL)
-      });
-      }
-    );
+    // uploadTask.on('state_changed', 
+    // (snapshot) => {
+    //   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //   console.log('Upload is ' + progress + '% done');
+    //   switch (snapshot.state) {
+    //     case 'paused':
+    //       console.log('Upload is paused');
+    //       break;
+    //     case 'running':
+    //       console.log('Upload is running');
+    //       break;
+    //   }
+    // }, 
+    // (error) => {
+    //   console.log(error)
+    // }, 
+    // () => {
+    //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+    //     setPic(downloadURL)
+    //   });
+    //   }
+    // );
   }
 
   useEffect(() => {
@@ -91,7 +95,7 @@ const EditProfile = ({route, navigation}) => {
  
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.AndroidSafeArea}>
         <View style={{
             width: '100%',
             height: '100%',
@@ -178,4 +182,9 @@ const EditProfile = ({route, navigation}) => {
 
 export default EditProfile
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  AndroidSafeArea: {
+    flex: Platform.OS == "android" ? 1 : 0,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+  }
+})

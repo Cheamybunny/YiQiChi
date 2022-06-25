@@ -1,12 +1,11 @@
 import React, {useState, useLayoutEffect, useEffect} from "react"
 import { View, Image, StyleSheet, TextInput, Text, TouchableOpacity } from "react-native"
 import { db } from "../../Firebase"
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, uploadBytes} from "firebase/storage"
 import { auth } from "../../Firebase"
 import { getDoc, doc, setDoc, serverTimestamp } from "firebase/firestore"
 import { useNavigation } from "@react-navigation/native"
-import firebase from 'firebase/compat/app'
-import 'firebase/compat/storage'
+import Feather from 'react-native-vector-icons/Feather';
 
 
 function Save ({route}) {
@@ -16,7 +15,7 @@ function Save ({route}) {
     const [uploaded, setUploaded] = useState(false)
 
     const navigation = useNavigation()
-    useEffect(() => {
+    useLayoutEffect(() => {
         const getUser = async() => {
             if (auth.currentUser != null ) {
                 
@@ -31,7 +30,8 @@ function Save ({route}) {
                     }
             }
         }
-        if(data != "") {
+       
+        if(data != "" && !uploaded) {
             const docData = {
                 caption: caption,
                 comments: [],
@@ -42,60 +42,65 @@ function Save ({route}) {
             }   
             const postRef = doc(db, `users/${auth.currentUser.uid}/posts/${Math.random().toString(36)}`) 
             setDoc(postRef, docData, {merge: true})
+            console.log(uploaded)
             setUploaded(true)
         }
-        if (uploaded) {    
-            setUploaded(false)
-            setData("")
-            navigation.navigate("Home")
+        if(uploaded) {
+            navigation.navigate("Main")
         }
-        if(user == []) {getUser()}
-    })
+        
+        if(user.length == 0) {getUser()}
+    }, [data, user, uploaded])
    
     
     const SaveStorage = async(image, path) => {
         const storage = getStorage()
-        const storageRef = ref(storage, `post/${auth.currentUser.uid}/${Math.random().toString(36)}`)
+        const storageRef = ref(storage, path)   
         const response = await fetch(image);
         const file = await response.blob();
-        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadBytes(storageRef, file).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((downloadURL) => {
+                        setData(downloadURL)}
+            )})
+        // const uploadTask = uploadBytesResumable(storageRef, file);
    
-        uploadTask.on('state_changed', 
-        (snapshot) => {
-          // Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-          switch (snapshot.state) {
-            case 'paused':
-              console.log('Upload is paused');
-              break;
-            case 'running':
-              console.log('Upload is running');
-              break;
-          }
-        }, 
-        (error) => {
-          console.log(error)
-        }, 
-        () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setData(downloadURL)
-          });
-        }
-      );
+    //     uploadTask.on('state_changed', 
+    //     (snapshot) => {
+    //       // Observe state change events such as progress, pause, and resume
+    //       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    //       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //       console.log('Upload is ' + progress + '% done');
+    //       switch (snapshot.state) {
+    //         case 'paused':
+    //           console.log('Upload is paused');
+    //           break;
+    //         case 'running':
+    //           console.log('Upload is running');
+    //           break;
+    //       }
+    //     }, 
+    //     (error) => {
+    //       console.log(error)
+    //     }, 
+    //     () => {
+    //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+    //         setData(downloadURL)
+    //       });
+    //     }
+    //   );
     }
 
-    const createPost = async(image) => {
+    const createPost = (image) => {
         if (image == undefined) {
             return
         } 
-        await SaveStorage(image, `post/${auth.currentUser.uid}/${Math.random().toString(36)}`)
+            SaveStorage(image, `post/${auth.currentUser.uid}/${Math.random().toString(36)}`)
     }
 
     return (
-        <View>
-            <Image source={{uri: route.params.imageSource}} style={{width: '100%', height: '70%',}}></Image>
+        <View>  
+            <Image source={{uri: route.params.imageSource}} style={{width: '100%', height: '60%',}}></Image>
             <View style={styles.inputContainer}>
                 <TextInput
                     placeholder="Caption"
@@ -105,7 +110,7 @@ function Save ({route}) {
                     autoCapitalize="none"
                 />
                 <TouchableOpacity onPress={() => createPost(route.params.imageSource)}>
-                    <Text>Upload</Text>
+                   <Feather name='check' style={styles.upload}/>
                 </TouchableOpacity>
             </View>
         </View>
@@ -114,15 +119,22 @@ function Save ({route}) {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        width: '60%'
+        width: '80%',
+        alignSelf: 'center',
+        paddingVertical: 10
       },
       input: {
-        backgroundColor: 'white',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 10,
-        marginTop: 5,
+        fontSize: 20,
+        borderBottomWidth: 1,
+        paddingTop: 20,
+        borderColor:'#CDCDCD',
       },
+      upload: {
+        fontSize: 40,
+        padding: 50,
+        marginTop: 50,
+        alignSelf: 'center'
+      }
 })
 
 export default Save
