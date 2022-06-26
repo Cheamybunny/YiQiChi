@@ -5,6 +5,10 @@ import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import { auth, app, db } from '../Firebase';
 import { useNavigation } from "@react-navigation/native"
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/auth'
+import 'firebase/compat/firestore'
+import 'firebase/compat/storage'
 
 
 const EditProfile = ({route, navigation}) => {
@@ -33,6 +37,7 @@ const EditProfile = ({route, navigation}) => {
         'Success',
         'Profile updated successfully'
     )
+    console.log('Profile Edited')
   }
 
   const saveStorage = async(image, path) => {
@@ -63,7 +68,7 @@ const EditProfile = ({route, navigation}) => {
         setPic(downloadURL)
       });
       }
-    );
+    );  
   }
 
   useEffect(() => {

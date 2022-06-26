@@ -31,7 +31,12 @@ function Save ({route}) {
                     }
             }
         }
-        if(data != "") {
+        
+        if (user.length == 0) {
+            getUser()
+        }
+
+        if(uploaded) {
             const docData = {
                 caption: caption,
                 comments: [],
@@ -40,22 +45,20 @@ function Save ({route}) {
                 profile_picture: user.profilePic,
                 user: user.username
             }   
-            const postRef = doc(db, `users/${auth.currentUser.uid}/posts/${Math.random().toString(36)}`) 
+            const postRef = doc(db, `users/${auth.currentUser.uid}/posts/`,`${Math.random().toString(36)}`) 
             setDoc(postRef, docData, {merge: true})
-            setUploaded(true)
+            if (uploaded) {   
+                navigation.navigate("Main")
+            }
         }
-        if (uploaded) {    
-            setUploaded(false)
-            setData("")
-            navigation.navigate("Home")
-        }
-        if(user == []) {getUser()}
+        
+        
     })
    
     
     const SaveStorage = async(image, path) => {
         const storage = getStorage()
-        const storageRef = ref(storage, `post/${auth.currentUser.uid}/${Math.random().toString(36)}`)
+        const storageRef = ref(storage, path)
         const response = await fetch(image);
         const file = await response.blob();
         const uploadTask = uploadBytesResumable(storageRef, file);
@@ -90,7 +93,7 @@ function Save ({route}) {
         if (image == undefined) {
             return
         } 
-        await SaveStorage(image, `post/${auth.currentUser.uid}/${Math.random().toString(36)}`)
+        await SaveStorage(image, `post/${auth.currentUser.uid}/${Math.random().toString(36)}`).then(setUploaded(true))
     }
 
     return (

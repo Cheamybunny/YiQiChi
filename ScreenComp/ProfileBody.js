@@ -37,7 +37,7 @@ export const ProfileBody = ({
           </Text>
         </View>
         <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 30}}>
-          <TouchableOpacity onPress={() => navigation.navigate(NewPost)}>
+          <TouchableOpacity>
             <Feather 
             name="plus-square" 
             style={{
@@ -121,6 +121,7 @@ export const ProfileButtons = ({id,userDetails}) => {
         }}>
         <TouchableOpacity 
         onPress={()=> 
+          
           navigation.push('EditProfile',{
             userDetails: userDetails,
             imageSource: null
