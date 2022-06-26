@@ -21,7 +21,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="YiQiChi Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}}/>
         <Stack.Screen name="EditProfilePic" component={EditProfilePic} />
         <Stack.Screen name="NewPost" component={NewPost} options={{
           headerBackTitleVisible: false, headerTitle: "New Post"

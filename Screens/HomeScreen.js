@@ -1,24 +1,12 @@
-import { StyleSheet, SafeAreaView, FlatList } from 'react-native';
+import { StyleSheet, SafeAreaView, FlatList, StatusBar } from 'react-native';
 import React, { useState, useEffect } from 'react'
 import { db } from '../Firebase'
 import Header from '../ScreenComp/Home/Header';
 import Post from '../ScreenComp/Home/Post'
-import { ScrollView } from 'react-native-gesture-handler';
 import { collectionGroup, onSnapshot } from 'firebase/firestore'
-import { POSTS } from '../dummyData/posts';
-import { View } from 'react-native-web';
 const HomeScreen = () => {
 
   const [posts, setPosts] = useState([])
-
-
-  // const handleSignOut = () => {
-  //   signOut(auth)
-  //     .then(() => {
-  //       navigation.replace("YiQiChi Login")
-  //     })
-  //     .catch(error => alert(error.message))
-  // }
   
   const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
     setPosts(snapshot.docs.map(doc => doc.data()))},
@@ -32,7 +20,7 @@ const HomeScreen = () => {
 
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.AndroidSafeArea}>
         <Header navigation/>
         <FlatList
           data={posts}
@@ -63,4 +51,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
   },
+  AndroidSafeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+  }
 })

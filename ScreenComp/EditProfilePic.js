@@ -58,7 +58,6 @@ const EditProfilePic = ({route, navigation}) => {
     </Camera>
     <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={styles.button}
           onPress={() => {
             setType(type === CameraType.back ? CameraType.front : CameraType.back);
           }}>
@@ -66,8 +65,8 @@ const EditProfilePic = ({route, navigation}) => {
         </TouchableOpacity>      
           <TouchableOpacity onPress={takePicture} style={styles.capturePicture}>
           </TouchableOpacity>
-          <TouchableOpacity onPress={pickImage} style={styles.chooseImage}>
-              <Feather style={{width: '100%', height: '100%'}} name={"image"} size={40} color="black" />
+          <TouchableOpacity onPress={pickImage}>
+              <Feather style={styles.chooseImage} name={"image"} size={40} color="black" />
           </TouchableOpacity>
       </View>
     </View>
@@ -91,8 +90,9 @@ const styles = StyleSheet.create({
       flex: 0.1,
       backgroundColor: 'transparent',
       flexDirection: 'row',
-      margin: 30,
-      alignItems:'center'
+      alignItems:'center',
+      alignSelf: 'center',
+      margin: 45
     },
     button: {
       flex: 0.1,
@@ -100,8 +100,9 @@ const styles = StyleSheet.create({
       color: 'black'
     },
     text: {
-      fontSize: 18,
-      color: 'white',
+      fontSize: 20,
+      color: 'black',
+      alignSelf:'flex-start'
     },
     capturePicture: {
         borderWidth: 6,
@@ -110,9 +111,10 @@ const styles = StyleSheet.create({
         height: captureSize,
         width: captureSize,
         borderRadius: Math.floor(captureSize / 2),
-        marginHorizontal: 120  
+        alignSelf: 'center',
+         marginHorizontal: 80  
     },
     chooseImage: {
-        align: 'flex-end'
+        alignSelf: 'flex-end',
     }
   });

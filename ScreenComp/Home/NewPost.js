@@ -11,8 +11,6 @@ const NewPost = ({route}) => {
   const navigation = useNavigation()
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(CameraType.back);
-  const [isCameraReady, setIsCameraReady] = useState(false);
-  const [image, setImage] = useState(null);
   const cameraRef = useRef()
   useEffect(() => {
     (async () => {
@@ -40,7 +38,6 @@ const NewPost = ({route}) => {
         });
 
         if (!result.cancelled) {
-            setImage(result.uri);
             navigation.push('Save', {imageSource: result.uri})
         }
     };
@@ -58,7 +55,6 @@ const NewPost = ({route}) => {
       </Camera>
       <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={styles.button}
             onPress={() => {
               setType(type === CameraType.back ? CameraType.front : CameraType.back);
             }}>
@@ -66,8 +62,8 @@ const NewPost = ({route}) => {
           </TouchableOpacity>      
             <TouchableOpacity onPress={takePicture} style={styles.capturePicture}>
             </TouchableOpacity>
-            <TouchableOpacity onPress={pickImage} style={styles.chooseImage}>
-                <Feather style={{width: '100%', height: '100%'}} name={"image"} size={40} color="black" />
+            <TouchableOpacity onPress={pickImage} >
+                <Feather style={styles.chooseImage} name={"image"} size={40} color="black" />
             </TouchableOpacity>
         </View>
     </View>
@@ -80,38 +76,41 @@ const WINDOW_WIDTH = Dimensions.get("window").width;
 const closeButtonSize = Math.floor(WINDOW_HEIGHT * 0.032);
 const captureSize = Math.floor(WINDOW_HEIGHT * 0.09);
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    camera: {
-      flex: 1,
-    },
-    buttonContainer: {
-      flex: 0.1,
-      backgroundColor: 'transparent',
-      flexDirection: 'row',
-      margin: 30,
-      alignItems:'center'
-    },
-    button: {
-      flex: 0.1,
+  container: {
+    flex: 1,
+  },
+  camera: {
+    flex: 1,
+  },
+  buttonContainer: {
+    flex: 0.1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    alignItems:'center',
+    alignSelf: 'center',
+    margin: 45
+  },
+  button: {
+    flex: 0.1,
+    alignSelf: 'flex-end',
+    color: 'black'
+  },
+  text: {
+    fontSize: 20,
+    color: 'black',
+    alignSelf:'flex-start'
+  },
+  capturePicture: {
+      borderWidth: 6,
+      borderColor: 'gray',
+      backgroundColor: "white",
+      height: captureSize,
+      width: captureSize,
+      borderRadius: Math.floor(captureSize / 2),
+      alignSelf: 'center',
+       marginHorizontal: 80  
+  },
+  chooseImage: {
       alignSelf: 'flex-end',
-      color: 'black'
-    },
-    text: {
-      fontSize: 18,
-      color: 'white',
-    },
-    capturePicture: {
-        borderWidth: 6,
-        borderColor: 'gray',
-        backgroundColor: "white",
-        height: captureSize,
-        width: captureSize,
-        borderRadius: Math.floor(captureSize / 2),
-        marginHorizontal: 120  
-    },
-    chooseImage: {
-        align: 'flex-end'
-    }
+  }
   });
