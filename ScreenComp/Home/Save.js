@@ -40,7 +40,7 @@ function Save ({route}) {
                 profile_picture: user.profilePic,
                 user: user.username
             }   
-            const postRef = doc(db, `users/${auth.currentUser.uid}/posts/${Math.random().toString(36)}`) 
+            const postRef = doc(db, `users/${auth.currentUser.uid}/posts/`,`${Math.random().toString(36)}`) 
             setDoc(postRef, docData, {merge: true})
             console.log(uploaded)
             setUploaded(true)
