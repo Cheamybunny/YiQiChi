@@ -92,7 +92,7 @@ const EditProfile = ({route, navigation}) => {
         { merge: true })
       }
     }  
-  })
+  },[saved, uploaded, profilePic])
  
 
   return (
