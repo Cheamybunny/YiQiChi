@@ -2,7 +2,6 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React, {useState} from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation } from "@react-navigation/native"
-import images from '../images'
 import NewPost from './Home/NewPost'
 
 
@@ -36,13 +35,8 @@ export const ProfileBody = ({
             {accountName}
           </Text>
         </View>
-<<<<<<< HEAD
-        <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 30}}>
-          <TouchableOpacity>
-=======
         <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 5}}>
           <TouchableOpacity onPress={() => navigation.navigate(NewPost)}>
->>>>>>> 3a420abae0367f9e112b543e857645075e711610
             <Feather 
             name="plus-square" 
             style={{

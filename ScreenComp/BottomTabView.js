@@ -1,11 +1,26 @@
-import { StyleSheet, Text, View , ScrollView } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View , ScrollView, FlatList, Image} from 'react-native'
+import GridFlatList from 'grid-flatlist-react-native';
+import React, { useState, useEffect } from 'react'
+import { db } from '../Firebase'
+import Post from './Home/Post'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import Ionic from "react-native-vector-icons/Ionicons"
+import { collectionGroup, onSnapshot } from 'firebase/firestore'
 
 const BottomTabView = () => {
 
   const Tab = createMaterialTopTabNavigator();
+
+  const [posts, setPosts] = useState([])
+  
+  const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
+    setPosts(snapshot.docs.map(doc => doc.data()))},
+    (error) => {}
+    )
+
+  useEffect(() => { 
+    loadPosts
+  }, [])
 
   let squares = [];
   let numberOfSquare = 9;
@@ -27,24 +42,21 @@ const BottomTabView = () => {
 
   const Posts = () => {
     return(
-      <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={{
-        width: '100%',
-        height: '100%',
+      <View style={{
+        width: '100%'
       }}>
-        <View style={{
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'white',
-          flexWrap: 'wrap',
-          flexDirection: 'row',
-          paddingVertical: 5,
-          justifyContent: 'space-between',
-        }}>
-          {squares}
-        </View>
-      </ScrollView>
+        <FlatList
+          numColumns={3}
+          data={posts}
+          renderItem={({item, index, separators }) => (
+            <View style ={{ width: '33.33%', height: 120,}}>
+            <Image
+                source={{uri: item.imageURL}}
+                style={{ height: '100%', resizeMode: 'cover', }}
+            />
+           </View>
+        )}/>
+      </View>
     )
   }
 
