@@ -33,6 +33,7 @@ const EditProfile = ({route, navigation}) => {
         'Success',
         'Profile updated successfully'
     )
+    console.log('Profile Edited')
   }
 
   const saveStorage = async(image, path) => {
