@@ -36,13 +36,8 @@ export const ProfileBody = ({
             {accountName}
           </Text>
         </View>
-<<<<<<< HEAD
-        <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 30}}>
-          <TouchableOpacity>
-=======
         <View style={{flexDirection: 'row', alignItems:'center', marginHorizontal: 5}}>
           <TouchableOpacity onPress={() => navigation.navigate(NewPost)}>
->>>>>>> 3a420abae0367f9e112b543e857645075e711610
             <Feather 
             name="plus-square" 
             style={{
