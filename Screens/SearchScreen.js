@@ -66,8 +66,8 @@ const SearchScreen = () => {
       },
     ],
     region: {
-      latitude: 22.62938671242907,
-      longitude: 88.4354486029795,
+      latitude: 1.290270,
+      longitude: 103.851959,
       latitudeDelta: 0.04864195044303443,
       longitudeDelta: 0.040142817690068,
     },
