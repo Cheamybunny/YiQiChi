@@ -5,4 +5,5 @@ export default images = {
     comment: require('./assets/Comment.png'),
     bookmark: require('./assets/Bookmark.png'), 
     like: require('./assets/Like.png'),
+    logout: require('./assets/Logout.png')
 }

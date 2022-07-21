@@ -18,7 +18,7 @@ const Header = () => {
     return (
         
         <View style={styles.container}>
-            <TouchableOpacity onPress={handleSignOut}>
+            <TouchableOpacity>
                 <Image 
                     style={styles.logo} 
                     source={images.headerLogo}
@@ -32,10 +32,10 @@ const Header = () => {
                         source={images.newPost}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleSignOut}>
                     <Image
                         style={styles.icon}
-                        source={images.activity}
+                        source={images.logout}
                     />
                 </TouchableOpacity>
             </View>    
