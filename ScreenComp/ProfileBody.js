@@ -2,7 +2,6 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React, {useState} from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation } from "@react-navigation/native"
-import images from '../images'
 import NewPost from './Home/NewPost'
 
 
