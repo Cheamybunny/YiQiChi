@@ -1,8 +1,6 @@
-import { StyleSheet, Text, View , ScrollView, FlatList, Image} from 'react-native'
-import GridFlatList from 'grid-flatlist-react-native';
+import { StyleSheet, View , ScrollView, FlatList, Image} from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { db } from '../Firebase'
-import Post from './Home/Post'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import Ionic from "react-native-vector-icons/Ionicons"
 import { collectionGroup, onSnapshot } from 'firebase/firestore'
