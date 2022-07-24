@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function userIsAuthenticated() {
+    	return request.auth != null;
+    }
+    
+    match /{path=**}/posts/{postId} {
+    	allow read, write: if userIsAuthenticated();
+    }
+    match /users/{userId} {
+    	allow read, write: if userIsAuthenticated() && (request.auth.uid == userId);
+    }
+    match /{path=**}/posts {
+    	allow read, write: if userIsAuthenticated();
+    }
+    
+    match /restaurants/{document=**} {
+    	allow read, write: if userIsAuthenticated();
+    }
+  }
+}

@@ -7,15 +7,25 @@ import { getStorage } from "firebase/storage"
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   databaseURL: "",
+//   apiKey: "AIzaSyAPyLmPlEFZ6SR9h7MtMsKL1Lc2-p15e9c",
+//   authDomain: "yiqichi-b784d.firebaseapp.com",
+//   projectId: "yiqichi-b784d",
+//   storageBucket: "yiqichi-b784d.appspot.com",
+//   messagingSenderId: "241273755972",
+//   appId: "1:241273755972:web:c8d8d290a5ea07524b1f11"
+// };
 const firebaseConfig = {
-  databaseURL: "",
-  apiKey: "AIzaSyAPyLmPlEFZ6SR9h7MtMsKL1Lc2-p15e9c",
-  authDomain: "yiqichi-b784d.firebaseapp.com",
-  projectId: "yiqichi-b784d",
-  storageBucket: "yiqichi-b784d.appspot.com",
-  messagingSenderId: "241273755972",
-  appId: "1:241273755972:web:c8d8d290a5ea07524b1f11"
-};
+  databaseURL:"",
+  apiKey: "AIzaSyA9rumEQoSNnZnGUQDwvF4IMUPDVntnDOA",
+  authDomain: "dummy-9eccc.firebaseapp.com",
+  projectId: "dummy-9eccc",
+  storageBucket: "dummy-9eccc.appspot.com",
+  messagingSenderId: "873265581463",
+  appId: "1:873265581463:web:06fb5b529059d1fb8208d2"
+
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

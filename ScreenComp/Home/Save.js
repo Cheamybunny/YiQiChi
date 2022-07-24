@@ -1,9 +1,9 @@
-import React, {useState, useLayoutEffect, useEffect} from "react"
-import { View, Image, StyleSheet, TextInput, Text, TouchableOpacity } from "react-native"
+import React, {useState, useLayoutEffect} from "react"
+import { View, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native"
 import { db } from "../../Firebase"
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, uploadBytes} from "firebase/storage"
+import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage"
 import { auth } from "../../Firebase"
-import { getDoc, doc, addDoc, serverTimestamp, collection } from "firebase/firestore"
+import { getDoc, doc, setDoc } from "firebase/firestore"
 import { useNavigation } from "@react-navigation/native"
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -15,31 +15,44 @@ function Save ({route}) {
     const [uploaded, setUploaded] = useState(false)
 
     const navigation = useNavigation()
-    useEffect(() => {
-        if(user.length == 0) {
-            getUser()
-            return getUser
+    useLayoutEffect(() => {
+        const getUser = async() => {
+            if (auth.currentUser != null ) {
+                
+                const cuser = auth.currentUser?.uid
+                const docRef = doc(db, 'users', cuser)
+                const docSnap = await getDoc(docRef)
+                if (docSnap.exists()) {
+                    setUser(docSnap.data());
+                    } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                    }
+            }
         }
-        return () => {
-            getDoc;
-            getUser
+       
+        if(data != "" && !uploaded) {
+            const docData = {
+                caption: caption,
+                comments: [],
+                imageURL: data,
+                likes: 0,
+                profile_picture: user.profilePic,
+                user: user.username
+            }   
+            const postRef = doc(db, `users/${auth.currentUser.uid}/posts/${Math.random().toString(36)}`) 
+            setDoc(postRef, docData, {merge: true})
+            console.log(uploaded)
+            setUploaded(true)
         }
-    }, [user])
+        if(uploaded) {
+            navigation.navigate("Main")
+        }
+        
+        if(user.length == 0) {getUser()}
+    }, [data, user, uploaded])
    
-    const getUser = async() => {
-        if (auth.currentUser != null ) {
-            
-            const cuser = auth.currentUser?.uid
-            const docRef = doc(db, 'users', cuser)
-            const docSnap = await getDoc(docRef)
-            if (docSnap.exists()) {
-                setUser(docSnap.data());
-                } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-                }
-        }
-    }
+    
     const SaveStorage = async(image, path) => {
         const storage = getStorage()
         const storageRef = ref(storage, path)   
@@ -47,22 +60,10 @@ function Save ({route}) {
         const file = await response.blob();
 
         uploadBytes(storageRef, file).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then(async(downloadURL) => {
-                        const docData = {
-                            caption: caption,
-                            comments: [],
-                            imageURL: downloadURL,
-                            likes: 0,
-                            profile_picture: user.profilePic,
-                            user: user.username,
-                          };
-                          const postRef = doc(db, 'users', auth.currentUser.uid);
-                          const colRef = collection(postRef, 'posts')
-                          await addDoc(colRef, docData);
-
-                          navigation.navigate("Main")
-                    }
+            getDownloadURL(snapshot.ref).then((downloadURL) => {
+                        setData(downloadURL)}
             )})
+  
     }
 
     const createPost = (image) => {
@@ -70,7 +71,6 @@ function Save ({route}) {
             return
         } 
             SaveStorage(image, `post/${auth.currentUser.uid}/${Math.random().toString(36)}`)
-            setUploaded(true)
     }
 
     return (
@@ -84,7 +84,7 @@ function Save ({route}) {
                     style={styles.input}
                     autoCapitalize="none"
                 />
-                <TouchableOpacity onPress={() => createPost(route.params.imageSource)} disabled={uploaded}>
+                <TouchableOpacity onPress={() => createPost(route.params.imageSource)}>
                    <Feather name='check' style={styles.upload}/>
                 </TouchableOpacity>
             </View>
