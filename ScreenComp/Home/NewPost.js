@@ -1,46 +1,50 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Dimensions, StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
-import { Camera, CameraType } from 'expo-camera';
-import { useNavigation } from '@react-navigation/native';
-import * as ImagePicker from 'expo-image-picker';
-import Feather from 'react-native-vector-icons/Feather';
-import Save from './Save';
+import { useNavigation } from "@react-navigation/native";
+import { Camera, CameraType } from "expo-camera";
+import * as ImagePicker from "expo-image-picker";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Feather from "react-native-vector-icons/Feather";
 
-
-const NewPost = ({route}) => {
-  const navigation = useNavigation()
+const NewPost = ({ route }) => {
+  const navigation = useNavigation();
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(CameraType.back);
-  const cameraRef = useRef()
+  const cameraRef = useRef();
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
   const takePicture = async () => {
     if (cameraRef.current) {
-        const options = { quality: 0.5, base64: true, skipProcessing: true };
-        const data = await cameraRef.current.takePictureAsync(null);
-        const source = data.uri;
-        if (source != null) {
-            navigation.push('Save', {imageSource:source})
-        }
+      const options = { quality: 0.5, base64: true, skipProcessing: true };
+      const data = await cameraRef.current.takePictureAsync(null);
+      const source = data.uri;
+      if (source != null) {
+        navigation.push("Save", { imageSource: source });
+      }
     }
-};
-    const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
-        let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-        });
+  };
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-        if (!result.cancelled) {
-            navigation.push('Save', {imageSource: result.uri})
-        }
-    };
+    if (!result.cancelled) {
+      navigation.push("Save", { imageSource: result.uri });
+    }
+  };
 
   if (hasPermission === null) {
     return <View />;
@@ -51,26 +55,35 @@ const NewPost = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={type} ref={cameraRef}>
-      </Camera>
+      <Camera style={styles.camera} type={type} ref={cameraRef}></Camera>
       <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              setType(type === CameraType.back ? CameraType.front : CameraType.back);
-            }}>
-            <Text style={styles.text}> Flip </Text>
-          </TouchableOpacity>      
-            <TouchableOpacity onPress={takePicture} style={styles.capturePicture}>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={pickImage} >
-                <Feather style={styles.chooseImage} name={"image"} size={40} color="black" />
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            setType(
+              type === CameraType.back ? CameraType.front : CameraType.back
+            );
+          }}
+        >
+          <Text style={styles.text}> Flip </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={takePicture}
+          style={styles.capturePicture}
+        ></TouchableOpacity>
+        <TouchableOpacity onPress={pickImage}>
+          <Feather
+            style={styles.chooseImage}
+            name={"image"}
+            size={40}
+            color="black"
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
-}
+};
 
-export default NewPost
+export default NewPost;
 const WINDOW_HEIGHT = Dimensions.get("window").height;
 const WINDOW_WIDTH = Dimensions.get("window").width;
 const closeButtonSize = Math.floor(WINDOW_HEIGHT * 0.032);
@@ -84,33 +97,33 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 0.1,
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    alignItems:'center',
-    alignSelf: 'center',
-    margin: 45
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
+    margin: 45,
   },
   button: {
     flex: 0.1,
-    alignSelf: 'flex-end',
-    color: 'black'
+    alignSelf: "flex-end",
+    color: "black",
   },
   text: {
     fontSize: 20,
-    color: 'black',
-    alignSelf:'flex-start'
+    color: "black",
+    alignSelf: "flex-start",
   },
   capturePicture: {
-      borderWidth: 6,
-      borderColor: 'gray',
-      backgroundColor: "white",
-      height: captureSize,
-      width: captureSize,
-      borderRadius: Math.floor(captureSize / 2),
-      alignSelf: 'center',
-       marginHorizontal: 80  
+    borderWidth: 6,
+    borderColor: "gray",
+    backgroundColor: "white",
+    height: captureSize,
+    width: captureSize,
+    borderRadius: Math.floor(captureSize / 2),
+    alignSelf: "center",
+    marginHorizontal: 80,
   },
   chooseImage: {
-      alignSelf: 'flex-end',
-  }
-  });
+    alignSelf: "flex-end",
+  },
+});

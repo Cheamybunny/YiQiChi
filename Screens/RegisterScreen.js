@@ -1,74 +1,80 @@
-import { KeyboardAvoidingView, StyleSheet, Text, View, TouchableOpacity, TextInput} from 'react-native';
-import React, { useState }from 'react'
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, app } from '../Firebase';
-import { useNavigation } from '@react-navigation/core'
-import { doc, getFirestore, setDoc } from 'firebase/firestore';
+import { auth, app } from "../Firebase";
+import { useNavigation } from "@react-navigation/core";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 
 const RegisterScreen = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [username, setUsername] = useState('')
-  const [name, setName] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const post = 0;
   const followers = 0;
   const following = 0;
-  const bio = '';
-  const profilePic = 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
+  const bio = "";
+  const profilePic =
+    "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
 
-  const navigation = useNavigation()
-  const db = getFirestore(app)
-  
+  const navigation = useNavigation();
+  const db = getFirestore(app);
+
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredentials => {
+      .then((userCredentials) => {
         const user = userCredentials.user;
         setDoc(doc(db, "users", user.uid), {
-            username,
-            email,
-            name,
-            post,
-            followers,
-            following,
-            bio,
-            profilePic,
-        })
-        console.log('Registered with:',user.email);
+          username,
+          email,
+          name,
+          post,
+          followers,
+          following,
+          bio,
+          profilePic,
+        });
+        console.log("Registered with:", user.email);
       })
-      .catch(error => alert(error.message))
-  }
+      .catch((error) => alert(error.message));
+  };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-    >
+    <KeyboardAvoidingView style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
           value={email}
-          onChangeText={text => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
           style={styles.input}
           autoCapitalize="none"
         />
         <TextInput
           placeholder="Password"
           value={password}
-          onChangeText={text => setPassword(text)}
+          onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
           autoCapitalize="none"
         />
         <TextInput
-          placeholder='Name'
+          placeholder="Name"
           value={name}
-          onChangeText={text => setName(text)}
+          onChangeText={(text) => setName(text)}
           style={styles.input}
           autoCapitalize="none"
         />
         <TextInput
-          placeholder='Username'
+          placeholder="Username"
           value={username}
-          onChangeText={text => setUsername(text)}
+          onChangeText={(text) => setUsername(text)}
           style={styles.input}
           autoCapitalize="none"
         />
@@ -83,54 +89,54 @@ const RegisterScreen = () => {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default RegisterScreen
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputContainer: {
-    width: '60%'
+    width: "60%",
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
   },
   buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#0782F9',
-    width: '100%',
+    backgroundColor: "#0782F9",
+    width: "100%",
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center'
+    alignItems: "center",
   },
   buttonText: {
-    color: 'white',
-    fontWeight: '700',
+    color: "white",
+    fontWeight: "700",
     fontSize: 16,
   },
   buttonOutline: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     marginTop: 5,
-    borderColor: '#0782F9',
+    borderColor: "#0782F9",
     borderWidth: 2,
   },
   buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
+    color: "#0782F9",
+    fontWeight: "700",
     fontSize: 16,
   },
-})
+});
