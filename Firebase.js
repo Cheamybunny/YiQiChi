@@ -17,13 +17,13 @@ import { getStorage } from "firebase/storage"
 //   appId: "1:241273755972:web:c8d8d290a5ea07524b1f11"
 // };
 const firebaseConfig = {
-  databaseURL:"",
-  apiKey: "AIzaSyA9rumEQoSNnZnGUQDwvF4IMUPDVntnDOA",
-  authDomain: "dummy-9eccc.firebaseapp.com",
-  projectId: "dummy-9eccc",
-  storageBucket: "dummy-9eccc.appspot.com",
-  messagingSenderId: "873265581463",
-  appId: "1:873265581463:web:06fb5b529059d1fb8208d2"
+  apiKey: "AIzaSyBVbOo6qOjIubOZw0v8pk0ilhe-JPwvbco",
+  authDomain: "help-a95e1.firebaseapp.com",
+  projectId: "help-a95e1",
+  storageBucket: "help-a95e1.appspot.com",
+  messagingSenderId: "804537078908",
+  appId: "1:804537078908:web:4ab7a75f06e9765e06e5f9",
+  measurementId: "G-RN4YYS0XPV"
 
 }
 

@@ -1,21 +1,29 @@
-import { StyleSheet, SafeAreaView, FlatList, StatusBar } from 'react-native';
+import { StyleSheet, SafeAreaView, FlatList, StatusBar, RefreshControl } from 'react-native';
 import React, { useState, useEffect } from 'react'
 import { db } from '../Firebase'
 import Header from '../ScreenComp/Home/Header';
 import Post from '../ScreenComp/Home/Post'
-import { collectionGroup, onSnapshot } from 'firebase/firestore'
+import { collectionGroup, onSnapshot, getDocs, query } from 'firebase/firestore'
 const HomeScreen = () => {
 
   const [posts, setPosts] = useState([])
+  const [refreshing, setRefreshing] = useState(false)
   
-  const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
-    setPosts(snapshot.docs.map(doc => doc.data()))},
-    (error) => {}
-    )
+  // const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
+  //   if (!snapshot.metadata.hasPendingWrites) {
+  //     setPosts(snapshot.docs.map(doc => doc.data()))}
+  //   },
+  //   (error) => {}
+  //   )
 
-  useEffect(() => { 
-    loadPosts
-  }, [])
+  const loadPosts = async() => {
+    setRefreshing(true)
+    const postQuery = query(collectionGroup(db, 'posts'))
+    const querySnapshot = await getDocs(postQuery)
+    setPosts(querySnapshot.docs.map(doc => doc.data()))
+    setRefreshing(false)
+  }
+
 
 
 
@@ -25,6 +33,7 @@ const HomeScreen = () => {
         <FlatList
           data={posts}
           renderItem={({item :post})=> <Post post = {post}/>}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={loadPosts} />}
           />
     </SafeAreaView>
   )

@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "yiqichi-b784d"
-  }
+    "testing": "help-a95e1",
+    "default": "help-a95e1"
+  },
+  "targets": {},
+  "etags": {}
 }
