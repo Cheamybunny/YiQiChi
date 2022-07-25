@@ -1,17 +1,23 @@
-import { StyleSheet, View , ScrollView, FlatList, Image} from 'react-native'
+import { StyleSheet, View , ScrollView, FlatList, Image, RefreshControl} from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { db } from '../Firebase'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import Ionic from "react-native-vector-icons/Ionicons"
-import { collectionGroup, onSnapshot } from 'firebase/firestore'
+import { db, auth } from '../Firebase'
+import { doc, collection, getDocs, query, onSnapshot, where } from 'firebase/firestore'
 
 const BottomTabView = () => {
 
   const [posts, setPosts] = useState([])
-  
-  const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
-    if (!snapshot.metadata.hasPendingWrites) {
-      setPosts(snapshot.docs.map(doc => doc.data()))}
+
+  const docRef = doc(db, 'users', auth.currentUser.uid);   
+  const postRef = collection(docRef, 'posts') 
+  const loadPosts = onSnapshot(postRef,{ includeMetadataChanges: true }, (snapshot) => {
+    if(!snapshot.metadata.hasPendingWrites){
+      const data = snapshot.docs.map(doc => doc.data())
+      console.log(data.length)
+      if (data.length > posts.length) {
+        console.log("loading")
+        setPosts(data)
+      }  
+    }
     },
     (error) => {}
     )
@@ -22,6 +28,7 @@ const BottomTabView = () => {
  
 
   const renderPost = ({item, index, separators}) => {
+    loadPosts
     return (
     <View style ={{ width: '33.33%', height: 120,}}>
     <Image
@@ -34,7 +41,9 @@ const BottomTabView = () => {
 
   return (
     <View style={{
-      width: '100%'
+      width: '100%',
+      paddingHorizontal: 0,
+      marginTop:40
     }}>
       <FlatList
         numColumns={3}

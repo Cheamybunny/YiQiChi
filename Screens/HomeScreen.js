@@ -3,22 +3,16 @@ import React, { useState, useEffect } from 'react'
 import { db } from '../Firebase'
 import Header from '../ScreenComp/Home/Header';
 import Post from '../ScreenComp/Home/Post'
-import { collectionGroup, onSnapshot, getDocs, query } from 'firebase/firestore'
+import { collectionGroup, getDocs, query, orderBy } from 'firebase/firestore'
 const HomeScreen = () => {
 
   const [posts, setPosts] = useState([])
   const [refreshing, setRefreshing] = useState(false)
   
-  // const loadPosts = onSnapshot(collectionGroup(db, 'posts'), (snapshot) => {
-  //   if (!snapshot.metadata.hasPendingWrites) {
-  //     setPosts(snapshot.docs.map(doc => doc.data()))}
-  //   },
-  //   (error) => {}
-  //   )
 
   const loadPosts = async() => {
     setRefreshing(true)
-    const postQuery = query(collectionGroup(db, 'posts'))
+    const postQuery = query(collectionGroup(db, 'posts'), orderBy('created', "desc"))
     const querySnapshot = await getDocs(postQuery)
     setPosts(querySnapshot.docs.map(doc => doc.data()))
     setRefreshing(false)

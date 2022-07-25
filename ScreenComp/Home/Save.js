@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from "react"
 import { View, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native"
-import { db } from "../../Firebase"
 import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage"
-import { auth } from "../../Firebase"
-import { getDoc, doc, setDoc, collection, addDoc } from "firebase/firestore"
+import { db, auth } from "../../Firebase"
+import { getDoc, doc, collection, addDoc, serverTimestamp } from "firebase/firestore"
 import { useNavigation } from "@react-navigation/native"
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -48,7 +47,9 @@ function Save ({route}) {
                     imageURL: downloadURL,
                     likes: 0,
                     profile_picture: user.profilePic,
-                    user: user.username
+                    user: user.username,
+                    uid: auth.currentUser?.uid,
+                    created: serverTimestamp()
                 }
                 const docRef = doc(db, 'users', auth.currentUser.uid);   
                 const postRef = collection(docRef, 'posts') 
@@ -64,7 +65,9 @@ function Save ({route}) {
                     imageURL: "https://www.underseaproductions.com/wp-content/uploads/2013/11/dummy-image-square.jpg",
                     likes: 0,
                     profile_picture: user.profilePic,
-                    user: user.username
+                    user: user.username,
+                    uid: auth.currentUser?.uid,
+                    created: serverTimestamp()
                 }
                 const docRef = doc(db, 'users', auth.currentUser.uid);   
                 const postRef = collection(docRef, 'posts') 
@@ -88,7 +91,7 @@ function Save ({route}) {
 
     return (
         <View>  
-            <Image source={{uri: route.params.imageSource}} style={{width: '100%', height: '60%',}}></Image>
+            <Image source={{uri: route.params.imageSource}} style={{width: '100%', height: '55%',}}></Image>
             <View style={styles.inputContainer}>
                 <TextInput
                     placeholder="Caption"
